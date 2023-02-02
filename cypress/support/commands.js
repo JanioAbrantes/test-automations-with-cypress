@@ -23,3 +23,10 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('validateMessage', (locator, message) => {
+    cy.get(locator).then(($msg) => {
+        let txt = $msg.text()
+        expect(txt).to.be.eq(message)
+    })
+})
