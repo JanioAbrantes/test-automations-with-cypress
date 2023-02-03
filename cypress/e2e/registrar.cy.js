@@ -1,72 +1,63 @@
 import { faker } from '@faker-js/faker';
+import { REGISTRO, MESSAGE, BUTTON } from '../support/locators.js'
 
-describe('Irá testar as funcionalidades da página de Registro', () => {
+describe('Will test the register page functionalitys', () => {
     beforeEach(() => {
         cy.visit('https://barrigareact.wcaquino.me/')
-        cy.xpath('//a[.="Registrar"]').click()
+        cy.xpath(REGISTRO.REGISTRAR_PAGE).click()
     })
     it('The user click on "Registrar" button with all fields empty', () => {
-        cy.get('.btn').click()
+        cy.get(BUTTON).click()
         cy.validateMessage(
-            '.toast-message', 
+            MESSAGE, 
             'Erro: Error: Request failed with status code 500')
     })
 
     it('The user click on "Registrar" button with only the name field filled', () => {
-        const name_field = '//input[@type="text"]'
-        cy.xpath(name_field).type(faker.name.fullName())
-        cy.get('.btn').click()
+        cy.xpath(REGISTRO.NAME).type(faker.name.fullName())
+        cy.get(BUTTON).click()
         cy.validateMessage(
-            '.toast-message', 
+            MESSAGE, 
             'Erro: Error: Request failed with status code 500')
     })
         
     it('The user click on "Registrar" button with only the password field filled', () => {
-        const password_field = '//input[@type="password"]'
-        cy.xpath(password_field).type(faker.random.alphaNumeric(8))
-        cy.get('.btn').click()
+        cy.xpath(REGISTRO.PASSWORD).type(faker.random.alphaNumeric(8))
+        cy.get(BUTTON).click()
         cy.validateMessage(
-            '.toast-message', 
+            MESSAGE, 
             'Erro: Error: Request failed with status code 500')
     })
         
     it('The user click on "Registrar" button with only the email field filled', () => {
         // This test will fail
-        const email_field = '//input[@type="email"]'
-        cy.xpath(email_field).type(faker.internet.email())
-        cy.get('.btn').click()
+        cy.xpath(REGISTRO.EMAIL).type(faker.internet.email())
+        cy.get(BUTTON).click()
         cy.validateMessage(
-            '.toast-message', 
+            MESSAGE, 
             'Erro: Error: Request failed with status code 500')
     })
     
     it('The user should be able to create a new user with valid values', () => {
         // This test may fail
-        const name_field = '//input[@type="text"]'
-        const email_field = '//input[@type="email"]'
-        const password_field = '//input[@type="password"]'
-        cy.xpath(name_field).type(faker.name.fullName())
-        cy.xpath(email_field).type(faker.internet.email())
-        cy.xpath(password_field).type(faker.random.alphaNumeric(8))
-        cy.get('.btn').click()
+        cy.xpath(REGISTRO.NAME).type(faker.name.fullName())
+        cy.xpath(REGISTRO.EMAIL).type(faker.internet.email())
+        cy.xpath(REGISTRO.PASSWORD).type(faker.random.alphaNumeric(8))
+        cy.get(BUTTON).click()
         cy.validateMessage(
-            '.toast-message', 
+            MESSAGE, 
             'Usuário adicionado com sucesso')
     })
     
     it('The user click on "Registrar" try to create an already created user', () => {
-        const name_field = '//input[@type="text"]'
-        const email_field = '//input[@type="email"]'
-        const password_field = '//input[@type="password"]'
-        cy.xpath(name_field).type('Jeovanio The Bug')
-        cy.xpath(email_field).type('jeovanio@cypress.com')
-        cy.xpath(password_field).type('123456789')
-        cy.get('.btn').click()
+        cy.xpath(REGISTRO.NAME).type('Jeovanio The Bug')
+        cy.xpath(REGISTRO.EMAIL).type('jeovanio@cypress.com')
+        cy.xpath(REGISTRO.PASSWORD).type('123456789')
+        cy.get(BUTTON).click()
         cy.validateMessage(
-            '.toast-message', 
+            MESSAGE, 
             'Erro: Error: Request failed with status code 500')
     })
-        
         
     it('The middle screen message should be displayed properly', () => {
         cy.validateMessage(

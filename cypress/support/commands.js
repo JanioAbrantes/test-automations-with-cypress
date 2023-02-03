@@ -23,10 +23,17 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import { LOGIN, BUTTON } from './locators.js'
 
 Cypress.Commands.add('validateMessage', (locator, message) => {
     cy.get(locator).then(($msg) => {
         let txt = $msg.text()
         expect(txt).to.be.eq(message)
     })
+})
+
+Cypress.Commands.add('logIn', () => {
+    cy.get(LOGIN.EMAIL).type('jeovanio@cypress.com')
+    cy.get(LOGIN.PASSWORD).type('123456789')
+    cy.get(BUTTON).click()
 })
