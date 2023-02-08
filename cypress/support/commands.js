@@ -23,7 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-import { LOGIN, BUTTON } from './locators.js'
+import { LOGIN, BUTTON, MENU, MESSAGE, DELETE_BTN } from './locators.js'
 
 Cypress.Commands.add('validateMessage', (locator, message) => {
     cy.get(locator).then(($msg) => {
@@ -32,8 +32,26 @@ Cypress.Commands.add('validateMessage', (locator, message) => {
     })
 })
 
-Cypress.Commands.add('logIn', () => {
+Cypress.Commands.add('login', () => {
+    cy.visit('https://barrigareact.wcaquino.me/')
     cy.get(LOGIN.EMAIL).type('jeovanio@cypress.com')
     cy.get(LOGIN.PASSWORD).type('123456789')
     cy.get(BUTTON).click()
+    cy.get(MESSAGE).click()
+})
+
+Cypress.Commands.add('resetar', () => {
+    cy.get(MENU.SETTINGS).click()
+    cy.get(MENU.RESET).click()
+    cy.wait(1)
+    cy.get(MENU.EXTRATO).click()
+    cy.get(MESSAGE).click({ multiple: true })
+    cy.xpath(DELETE_BTN).each($el => {
+        cy.wrap($el).click()
+    })
+    cy.get(MENU.SETTINGS).click()
+    cy.get(MENU.CONTAS).click()
+    cy.xpath(DELETE_BTN).each($el => {
+        cy.wrap($el).click()
+    })
 })

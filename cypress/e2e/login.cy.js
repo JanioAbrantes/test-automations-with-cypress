@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 import { LOGIN, MESSAGE, BUTTON } from '../support/locators.js'
 
 describe('Will test the Login page functionalitys', () => {
@@ -39,7 +39,7 @@ describe('Will test the Login page functionalitys', () => {
     })
 
     it('The user should be able to login with valid values', () => {
-        cy.logIn()
+        cy.login()
         cy.validateMessage(
             MESSAGE, 
             'Bem vindo, Jeovanio The Bug!')
