@@ -43,6 +43,12 @@ describe('Will test the Accounts page functionalitys', () => {
             cy.xpath(ACCOUNTS.ACCOUNT('baka')).should('not.exist')
         })
 
+        it('The middle screen message should be displayed properly', () => {
+            cy.validateMessage(
+                'small', 
+                'Seu Barriga - Nunca mais esqueça de pagar o aluguel.')
+        })
+
         afterEach(() => {
             cy.resetar()
         })

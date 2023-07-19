@@ -1,29 +1,4 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-import { LOGIN, BUTTON, MENU, MESSAGE, DELETE_BTN } from './locators.js'
+import { LOGIN, BUTTON, MENU, MESSAGE, DELETE_BTN, ACCOUNTS } from './locators.js'
 
 Cypress.Commands.add('validateMessage', (locator, message) => {
     cy.get(locator).then(($msg) => {
@@ -43,7 +18,7 @@ Cypress.Commands.add('login', () => {
 Cypress.Commands.add('resetar', () => {
     cy.get(MENU.SETTINGS).click()
     cy.get(MENU.RESET).click()
-    cy.wait(1)
+    cy.wait(1000)
     cy.get(MENU.EXTRATO).click()
     cy.get(MESSAGE).click({ multiple: true })
     cy.xpath(DELETE_BTN).each($el => {
@@ -54,4 +29,11 @@ Cypress.Commands.add('resetar', () => {
     cy.xpath(DELETE_BTN).each($el => {
         cy.wrap($el).click()
     })
+})
+
+Cypress.Commands.add('createAccount', () => {
+    cy.get(MENU.SETTINGS).click()
+    cy.get(MENU.CONTAS).click()
+    cy.get(ACCOUNTS.NAME).type('boleto')
+    cy.get(BUTTON).click()
 })
